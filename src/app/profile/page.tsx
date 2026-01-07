@@ -54,7 +54,7 @@ export default function ProfilePage() {
             </a>
             <button
               onClick={async () => {
-                await fetch('/api/auth/logout', { method: 'POST' });
+                await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
                 router.push('/login');
               }}
               className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700"

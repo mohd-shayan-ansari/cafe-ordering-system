@@ -21,7 +21,7 @@ export default function OrdersPage() {
   }, []);
 
   async function fetchOrders() {
-    const res = await fetch('/api/orders');
+    const res = await fetch('/api/orders', { credentials: 'include' });
     if (!res.ok) {
       router.push('/login');
       return;

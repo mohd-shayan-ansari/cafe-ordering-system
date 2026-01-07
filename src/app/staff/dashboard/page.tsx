@@ -32,7 +32,7 @@ export default function StaffDashboard() {
   }, []);
 
   async function fetchUser() {
-    const res = await fetch('/api/auth/me');
+    const res = await fetch('/api/auth/me', { credentials: 'include' });
     const data = await res.json();
     if (!data.user || data.user.role !== 'staff') {
       router.push('/staff/login');
@@ -43,7 +43,7 @@ export default function StaffDashboard() {
   }
 
   async function fetchOrders() {
-    const res = await fetch('/api/orders');
+    const res = await fetch('/api/orders', { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
       setOrders(data.orders || []);
@@ -51,7 +51,7 @@ export default function StaffDashboard() {
   }
 
   async function fetchMenu() {
-    const res = await fetch('/api/menu');
+    const res = await fetch('/api/menu', { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
       setMenuItems(data.items || []);
@@ -62,6 +62,7 @@ export default function StaffDashboard() {
     const res = await fetch(`/api/orders/${orderId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ status }),
     });
     if (res.ok) {
@@ -76,6 +77,7 @@ export default function StaffDashboard() {
     const res = await fetch(`/api/menu/${itemId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ isAvailable }),
     });
     if (res.ok) {
@@ -111,7 +113,7 @@ export default function StaffDashboard() {
           </button>
           <button
             onClick={async () => {
-              await fetch('/api/auth/logout', { method: 'POST' });
+              await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
               router.push('/staff/login');
             }}
             className="text-white text-sm hover:bg-red-600 bg-red-500 px-3 py-2 rounded-lg"

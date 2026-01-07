@@ -25,7 +25,7 @@ export default function OrderPage() {
   }, [orderId]);
 
   async function fetchOrder() {
-    const res = await fetch(`/api/orders/${orderId}`);
+    const res = await fetch(`/api/orders/${orderId}`, { credentials: 'include' });
     if (!res.ok) {
       router.push('/menu');
       return;

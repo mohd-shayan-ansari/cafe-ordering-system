@@ -31,7 +31,7 @@ export default function MenuPage() {
   }, []);
 
   async function fetchUser() {
-    const res = await fetch('/api/auth/me');
+    const res = await fetch('/api/auth/me', { credentials: 'include' });
     const data = await res.json();
     if (!data.user || data.user.role !== 'customer') {
       router.push('/login');
@@ -69,6 +69,7 @@ export default function MenuPage() {
     const res = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({
         items: cart.map((c) => ({ menuItemId: c.menuItemId, quantity: c.quantity })),
       }),
@@ -96,7 +97,7 @@ export default function MenuPage() {
           </a>
           <button
             onClick={async () => {
-              await fetch('/api/auth/logout', { method: 'POST' });
+              await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
               router.push('/login');
             }}
             className="text-white text-sm hover:bg-red-600 bg-red-500 px-3 py-1 rounded"
