@@ -15,13 +15,33 @@ export async function GET(req: NextRequest) {
 
     let orders;
     if (session.role === 'staff') {
-      orders = await Order.find().populate('customerId', 'name phone photoUrl').populate('items.menuItemId', 'name price').lean();
+      // Staff sees ALL orders from ALL customers, sorted by newest first
+      orders = await Order.find()
+        .populate({
+          path: 'customerId',
+          select: 'name phone photoUrl',
+        })
+        .populate({
+          path: 'items.menuItemId',
+          select: 'name price',
+        })
+        .sort({ createdAt: -1 })
+        .lean();
     } else {
-      orders = await Order.find({ customerId: session.userId }).populate('items.menuItemId', 'name price').lean();
+      // Customer sees only their own orders, sorted by newest first
+      orders = await Order.find({ customerId: session.userId })
+        .populate({
+          path: 'items.menuItemId',
+          select: 'name price',
+        })
+        .sort({ createdAt: -1 })
+        .lean();
     }
 
-    return NextResponse.json({ orders });
+    // Ensure we return an array
+    return NextResponse.json({ orders: Array.isArray(orders) ? orders : [] });
   } catch (e: any) {
+    console.error('Error fetching orders:', e);
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }

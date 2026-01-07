@@ -58,7 +58,12 @@ export default function StaffDashboard() {
     const res = await fetch('/api/orders', { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
-      setOrders(data.orders || []);
+      const allOrders = data.orders || [];
+      setOrders(allOrders);
+      // Console log to verify we're getting all orders from all customers
+      console.log(`Fetched ${allOrders.length} orders from server`);
+    } else {
+      console.error('Failed to fetch orders:', res.status);
     }
   }
 
