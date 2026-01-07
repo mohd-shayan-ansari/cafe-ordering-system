@@ -46,8 +46,8 @@ export default function OrdersPage() {
             <div className="flex justify-between items-start">
               <div>
                 <p className="font-semibold">Order #{order._id.slice(-6)}</p>
-                <p className="text-sm text-gray-600">Status: {order.status}</p>
-                <p className="text-sm text-gray-600">Total: ₹{order.totalAmount}</p>
+                <p className="text-sm text-gray-900 font-medium">Status: {order.status}</p>
+                <p className="text-sm text-gray-900 font-medium">Total: ₹{order.totalAmount}</p>
               </div>
               <a
                 href={`/order/${order._id}`}

@@ -346,14 +346,14 @@ export default function StaffDashboard() {
 
       {selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow max-w-lg w-full max-h-screen overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Order Details</h2>
-            <div className="space-y-2">
-              <p><strong>Order ID:</strong> {selectedOrder._id}</p>
-              <p><strong>Status:</strong> {selectedOrder.status}</p>
-              <p><strong>Total:</strong> ₹{selectedOrder.totalAmount}</p>
+          <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-lg w-full max-h-screen overflow-y-auto">
+            <h2 className="text-2xl font-bold mb-4 text-gray-900">Order Details</h2>
+            <div className="space-y-3">
+              <p className="text-gray-900"><strong className="font-bold">Order ID:</strong> {selectedOrder._id}</p>
+              <p className="text-gray-900"><strong className="font-bold">Status:</strong> {selectedOrder.status}</p>
+              <p className="text-gray-900"><strong className="font-bold">Total:</strong> ₹{selectedOrder.totalAmount}</p>
               <div>
-                <strong>Customer:</strong>
+                <strong className="font-bold text-gray-900">Customer:</strong>
                 <div className="flex items-center gap-2 mt-1">
                   {selectedOrder.customerId?.photoUrl && (
                     <img
@@ -363,14 +363,14 @@ export default function StaffDashboard() {
                     />
                   )}
                   <div>
-                    <p>{selectedOrder.customerId?.name || 'Unknown'}</p>
-                    <p className="text-sm text-gray-600">{selectedOrder.customerId?.phone || 'N/A'}</p>
+                    <p className="text-gray-900 font-semibold">{selectedOrder.customerId?.name || 'Unknown'}</p>
+                    <p className="text-sm text-gray-800">{selectedOrder.customerId?.phone || 'N/A'}</p>
                   </div>
                 </div>
               </div>
               <div>
-                <strong>Items:</strong>
-                <ul className="ml-4 list-disc">
+                <strong className="font-bold text-gray-900">Items:</strong>
+                <ul className="ml-4 list-disc text-gray-900">
                   {selectedOrder.items.map((item, idx) => (
                     <li key={idx}>
                       {item.quantity}x {item.menuItemId?.name || 'Item'}

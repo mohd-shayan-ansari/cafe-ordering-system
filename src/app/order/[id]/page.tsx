@@ -47,9 +47,9 @@ export default function OrderPage() {
       <div className="max-w-md w-full bg-white p-8 rounded shadow">
         <h1 className="text-2xl font-bold mb-4 text-center">Order Placed!</h1>
         <div className="mb-4">
-          <p className="text-sm text-gray-600">Order ID: {order._id}</p>
-          <p className="text-sm text-gray-600">Status: <span className="font-semibold">{order.status}</span></p>
-          <p className="text-sm text-gray-600">Total: ₹{order.totalAmount}</p>
+          <p className="text-sm text-gray-900 font-medium">Order ID: {order._id}</p>
+          <p className="text-sm text-gray-900 font-medium">Status: <span className="font-bold">{order.status}</span></p>
+          <p className="text-sm text-gray-900 font-medium">Total: ₹{order.totalAmount}</p>
         </div>
 
         <div className="border-t border-b py-4 my-4">
