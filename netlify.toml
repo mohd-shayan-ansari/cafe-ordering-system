@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Netlify Next.js Runtime
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Optional: Enable Next Image support via the runtime
+# The plugin handles Next.js functions and routing automatically.
