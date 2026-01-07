@@ -32,9 +32,12 @@ export default function StaffLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-6 text-center">Staff Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
+      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border-2 border-gray-200">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-1">KBS Foods</h1>
+          <p className="text-gray-600 font-medium">Staff Portal</p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Staff Username</label>

@@ -34,57 +34,63 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-6 text-center">Customer Signup</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-50 px-4 py-8">
+      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border-2 border-green-200">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-1">KBS Foods</h1>
+          <p className="text-gray-600 font-medium">Create Your Account</p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Phone Number *</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">📱 Phone Number *</label>
             <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              placeholder="Enter your phone number"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Name *</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">👤 Name *</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              placeholder="Enter your name"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Password *</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">🔒 Password *</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              placeholder="Create a password"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Profile Photo URL (Optional)</label>
+            <label className="block text-sm font-semibold mb-2 text-gray-700">📷 Profile Photo URL (Optional)</label>
             <input
               type="url"
               value={photoUrl}
               onChange={(e) => setPhotoUrl(e.target.value)}
               placeholder="https://example.com/photo.jpg"
-              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
             />
           </div>
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
+            className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-xl hover:from-green-600 hover:to-emerald-600 disabled:from-gray-400 disabled:to-gray-400 font-semibold transition transform hover:scale-105 shadow-md"
           >
-            {loading ? 'Signing up...' : 'Sign Up'}
+            {loading ? 'Creating Account...' : '✨ Sign Up'}
           </button>
         </form>
         <p className="text-sm text-center mt-4">
