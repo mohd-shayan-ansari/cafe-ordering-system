@@ -355,7 +355,7 @@ export default function StaffDashboard() {
               <div>
                 <strong>Customer:</strong>
                 <div className="flex items-center gap-2 mt-1">
-                  {selectedOrder.customerId.photoUrl && (
+                  {selectedOrder.customerId?.photoUrl && (
                     <img
                       src={selectedOrder.customerId.photoUrl}
                       alt="Customer"
@@ -363,8 +363,8 @@ export default function StaffDashboard() {
                     />
                   )}
                   <div>
-                    <p>{selectedOrder.customerId.name}</p>
-                    <p className="text-sm text-gray-600">{selectedOrder.customerId.phone}</p>
+                    <p>{selectedOrder.customerId?.name || 'Unknown'}</p>
+                    <p className="text-sm text-gray-600">{selectedOrder.customerId?.phone || 'N/A'}</p>
                   </div>
                 </div>
               </div>
@@ -373,7 +373,7 @@ export default function StaffDashboard() {
                 <ul className="ml-4 list-disc">
                   {selectedOrder.items.map((item, idx) => (
                     <li key={idx}>
-                      {item.quantity}x {item.menuItemId.name}
+                      {item.quantity}x {item.menuItemId?.name || 'Item'}
                     </li>
                   ))}
                 </ul>
@@ -443,7 +443,7 @@ export default function StaffDashboard() {
                   <div className="flex justify-between">
                     <div>
                       <p className="font-bold text-gray-800">Order #{order._id.slice(-6)}</p>
-                      <p className="text-sm text-gray-600">👤 {order.customerId.name}</p>
+                      <p className="text-sm text-gray-600">👤 {order.customerId?.name || 'Unknown Customer'}</p>
                       <p className="text-sm font-semibold text-orange-600">₹{order.totalAmount}</p>
                     </div>
                     <div>
