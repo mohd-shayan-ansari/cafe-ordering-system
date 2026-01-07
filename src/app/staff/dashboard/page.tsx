@@ -161,7 +161,8 @@ export default function StaffDashboard() {
     if (orderId) {
       const order = orders.find((o) => o._id === orderId);
       if (order) {
-        setSelectedOrder(order);
+        // Directly mark order as HandedOver when scanned
+        updateOrderStatus(orderId, 'HandedOver');
         setShowScanner(false);
       } else {
         alert('Order not found');
