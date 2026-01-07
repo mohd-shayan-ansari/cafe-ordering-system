@@ -1,7 +1,13 @@
 // Fix MongoDB index issue - Run once
 const mongoose = require('mongoose');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://mohdshayan0010_db_user:87976757@shayan.pbatlzj.mongodb.net/?appName=Shayan';
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+    console.error('Error: MONGODB_URI environment variable is not set');
+    console.log('Please set MONGODB_URI in your .env.local file or as an environment variable');
+    process.exit(1);
+}
 
 async function fixIndexes() {
     try {
