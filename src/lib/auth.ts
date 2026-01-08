@@ -20,14 +20,19 @@ export function signToken(payload: { userId: string; role: string }): string {
 
 export function verifyToken(token: string): { userId: string; role: string } | null {
   try {
-    return jwt.verify(token, SESSION_SECRET) as { userId: string; role: string };
-  } catch {
+    const decoded = jwt.verify(token, SESSION_SECRET) as { userId: string; role: string };
+    console.log(`[Auth] Token verified successfully for userId: ${decoded.userId}, role: ${decoded.role}`);
+    return decoded;
+  } catch (error) {
+    console.error(`[Auth] Token verification failed:`, error instanceof Error ? error.message : String(error));
+    console.log(`[Auth] SESSION_SECRET is set: ${!!process.env.SESSION_SECRET}`);
     return null;
   }
 }
 
 export async function setSessionCookie(userId: string, role: string) {
   const token = signToken({ userId, role });
+  console.log(`[Auth] Creating token for userId: ${userId}, role: ${role}`);
   const cookieStore = await cookies();
   cookieStore.set('session', token, {
     httpOnly: true,
@@ -36,6 +41,7 @@ export async function setSessionCookie(userId: string, role: string) {
     maxAge: 60 * 60 * 24 * 7, // 7 days
     path: '/',
   });
+  console.log(`[Auth] Cookie set successfully. Node env: ${process.env.NODE_ENV}`);
 }
 
 export async function clearSessionCookie() {

@@ -33,11 +33,16 @@ export default function MenuPage() {
   }, []);
 
   async function fetchUser() {
+    console.log('[Menu] Fetching user session from /api/auth/me');
     const res = await fetch('/api/auth/me', { credentials: 'include' });
     const data = await res.json();
+    console.log('[Menu] User session response:', { user: data.user, status: res.status });
+    
     if (!data.user || data.user.role !== 'customer') {
+      console.error('[Menu] Invalid user or not customer role');
       router.push('/login');
     } else {
+      console.log('[Menu] User authenticated:', data.user.name);
       setUser(data.user);
     }
   }
@@ -143,7 +148,7 @@ export default function MenuPage() {
           <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">🍽️ Available Items</h2>
           {items.filter((i) => i.isAvailable).length === 0 && (
             <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <p className="text-gray-500">No items available at the moment</p>
+              <p className="text-gray-700 font-medium">No items available at the moment</p>
             </div>
           )}
           <div className="grid sm:grid-cols-2 gap-4">
@@ -159,7 +164,7 @@ export default function MenuPage() {
                     )}
                   </div>
                   <h3 className="font-bold text-lg text-gray-800">{item.name}</h3>
-                  {item.description && <p className="text-sm text-gray-600 mt-1">{item.description}</p>}
+                  {item.description && <p className="text-sm text-gray-700 font-medium mt-1">{item.description}</p>}
                   <p className="text-xl font-bold mt-2 text-orange-600">₹{item.price}</p>
                   <button
                     onClick={() => addToCart(item)}
@@ -177,8 +182,8 @@ export default function MenuPage() {
           <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">🛒 Your Cart</h2>
           {cart.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-gray-500">Cart is empty</p>
-              <p className="text-xs text-gray-400 mt-1">Add items to get started</p>
+              <p className="text-gray-700 font-medium">Cart is empty</p>
+              <p className="text-xs text-gray-600 font-medium mt-1">Add items to get started</p>
             </div>
           )}
           <div className="space-y-3">
@@ -239,7 +244,7 @@ export default function MenuPage() {
                 <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">🛒 Your Cart</h2>
                 <button
                   onClick={() => setShowCart(false)}
-                  className="text-gray-600 hover:text-gray-800 text-2xl font-bold"
+                  className="text-gray-800 hover:text-gray-900 text-2xl font-bold"
                 >
                   ×
                 </button>
@@ -248,8 +253,8 @@ export default function MenuPage() {
               <div className="flex-1 overflow-y-auto">
                 {cart.length === 0 && (
                   <div className="text-center py-8">
-                    <p className="text-gray-500">Cart is empty</p>
-                    <p className="text-xs text-gray-400 mt-1">Add items to get started</p>
+                    <p className="text-gray-700 font-medium">Cart is empty</p>
+                    <p className="text-xs text-gray-600 font-medium mt-1">Add items to get started</p>
                   </div>
                 )}
                 <div className="space-y-3">
@@ -257,7 +262,7 @@ export default function MenuPage() {
                     <div key={c.menuItemId} className="flex justify-between items-center bg-orange-50 p-3 rounded-xl">
                       <div className="flex-1">
                         <p className="font-semibold text-sm text-gray-800">{c.name}</p>
-                        <p className="text-xs text-gray-600">₹{c.price} each</p>
+                        <p className="text-xs text-gray-700 font-medium">₹{c.price} each</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <button

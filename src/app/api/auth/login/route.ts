@@ -43,7 +43,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
     }
 
+    console.log(`[Auth] Setting session cookie for user: ${user._id.toString()}, role: ${user.role}`);
     await setSessionCookie(user._id.toString(), user.role);
+    console.log(`[Auth] Session cookie set successfully`);
 
     return NextResponse.json({
       user: {

@@ -6,7 +6,7 @@ export default function Home() {
           <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-2">KBS Foods</h1>
           <p className="text-lg font-medium text-gray-700">Delicious Food, Quick Service</p>
         </div>
-        <p className="text-center text-gray-600 mb-8">Order your favorite food with ease</p>
+        <p className="text-center text-gray-700 font-medium mb-8">Order your favorite food with ease</p>
         
         <div className="space-y-4">
           <a

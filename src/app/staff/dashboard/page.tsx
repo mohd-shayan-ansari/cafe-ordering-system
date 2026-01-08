@@ -251,7 +251,7 @@ export default function StaffDashboard() {
                   type="text"
                   value={newItem.name}
                   onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                   placeholder="e.g., Margherita Pizza"
                 />
               </div>
@@ -260,7 +260,7 @@ export default function StaffDashboard() {
                 <textarea
                   value={newItem.description}
                   onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                   placeholder="Brief description"
                   rows={2}
                 />
@@ -271,7 +271,7 @@ export default function StaffDashboard() {
                   type="number"
                   value={newItem.price}
                   onChange={(e) => setNewItem({ ...newItem, price: Number(e.target.value) })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                   placeholder="0"
                   min="0"
                 />
@@ -282,7 +282,7 @@ export default function StaffDashboard() {
                   type="url"
                   value={newItem.imageUrl}
                   onChange={(e) => setNewItem({ ...newItem, imageUrl: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                   placeholder="https://example.com/image.jpg"
                 />
               </div>
@@ -320,7 +320,7 @@ export default function StaffDashboard() {
                   type="text"
                   value={editingItem.name}
                   onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                 />
               </div>
               <div>
@@ -328,7 +328,7 @@ export default function StaffDashboard() {
                 <textarea
                   value={editingItem.description || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                   rows={2}
                 />
               </div>
@@ -338,7 +338,7 @@ export default function StaffDashboard() {
                   type="number"
                   value={editingItem.price}
                   onChange={(e) => setEditingItem({ ...editingItem, price: Number(e.target.value) })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                   min="0"
                 />
               </div>
@@ -348,7 +348,7 @@ export default function StaffDashboard() {
                   type="url"
                   value={editingItem.imageUrl || ''}
                   onChange={(e) => setEditingItem({ ...editingItem, imageUrl: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-gray-900 font-medium placeholder:text-gray-700"
                 />
               </div>
               <div className="flex gap-3 pt-2">
@@ -455,7 +455,7 @@ export default function StaffDashboard() {
           <div className="space-y-3">
             {orders.filter((o) => o.status !== 'HandedOver').length === 0 && (
               <div className="bg-white p-6 rounded-xl shadow-md text-center">
-                <p className="text-gray-500">No active orders</p>
+                <p className="text-gray-700 font-medium">No active orders</p>
               </div>
             )}
             {orders
@@ -469,7 +469,7 @@ export default function StaffDashboard() {
                   <div className="flex justify-between">
                     <div>
                       <p className="font-bold text-gray-800">Order #{order._id.slice(-6)}</p>
-                      <p className="text-sm text-gray-600">👤 {order.customerId?.name || 'Unknown Customer'}</p>
+                      <p className="text-sm text-gray-700 font-medium">👤 {order.customerId?.name || 'Unknown Customer'}</p>
                       <p className="text-sm font-semibold text-orange-600">₹{order.totalAmount}</p>
                     </div>
                     <div>
@@ -511,7 +511,7 @@ export default function StaffDashboard() {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <p className="font-bold text-gray-800">{item.name}</p>
-                    {item.description && <p className="text-xs text-gray-500 mt-1">{item.description}</p>}
+                    {item.description && <p className="text-xs text-gray-700 font-medium mt-1">{item.description}</p>}
                     <p className="text-sm font-semibold text-orange-600 mt-1">₹{item.price}</p>
                   </div>
                   <div className="flex gap-2 flex-col">

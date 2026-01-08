@@ -19,6 +19,7 @@ export default function SignupPage() {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ phone, name, password, photoUrl: photoUrl || undefined }),
     });
 
@@ -38,7 +39,7 @@ export default function SignupPage() {
       <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border-2 border-green-200">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-1">KBS Foods</h1>
-          <p className="text-gray-600 font-medium">Create Your Account</p>
+          <p className="text-gray-800 font-semibold">Create Your Account</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -48,7 +49,7 @@ export default function SignupPage() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
               placeholder="Enter your phone number"
             />
           </div>
@@ -59,7 +60,7 @@ export default function SignupPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
               placeholder="Enter your name"
             />
           </div>
@@ -70,7 +71,7 @@ export default function SignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
               placeholder="Create a password"
             />
           </div>
@@ -81,7 +82,7 @@ export default function SignupPage() {
               value={photoUrl}
               onChange={(e) => setPhotoUrl(e.target.value)}
               placeholder="https://example.com/photo.jpg"
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
             />
           </div>
           {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
@@ -93,9 +94,9 @@ export default function SignupPage() {
             {loading ? 'Creating Account...' : '✨ Sign Up'}
           </button>
         </form>
-        <p className="text-sm text-center mt-4">
+        <p className="text-sm text-center mt-4 text-gray-800">
           Already have an account?{' '}
-          <a href="/login" className="text-blue-600 hover:underline">
+          <a href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
             Login
           </a>
         </p>

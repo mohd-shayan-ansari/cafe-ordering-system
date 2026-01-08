@@ -38,11 +38,11 @@ export default function ProfilePage() {
             </div>
           )}
           <div>
-            <label className="block text-sm font-medium text-gray-600">Name</label>
+            <label className="block text-sm font-semibold text-gray-800">Name</label>
             <p className="text-lg">{user.name}</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600">Phone</label>
+            <label className="block text-sm font-semibold text-gray-800">Phone</label>
             <p className="text-lg">{user.phone}</p>
           </div>
           <div className="flex gap-4">

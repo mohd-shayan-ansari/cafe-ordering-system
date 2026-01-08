@@ -21,14 +21,25 @@ export default function OrdersPage() {
   }, []);
 
   async function fetchOrders() {
-    const res = await fetch('/api/orders', { credentials: 'include' });
-    if (!res.ok) {
-      router.push('/login');
-      return;
+    try {
+      console.log('[Orders Page] Fetching orders with credentials: include');
+      const res = await fetch('/api/orders', { credentials: 'include' });
+      console.log(`[Orders Page] Response status: ${res.status}`);
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error(`[Orders Page] Fetch failed with status ${res.status}:`, errorData);
+        router.push('/login');
+        return;
+      }
+      
+      const data = await res.json();
+      console.log(`[Orders Page] Successfully fetched ${data.orders?.length || 0} orders`);
+      setOrders(data.orders || []);
+      setLoading(false);
+    } catch (error) {
+      console.error('[Orders Page] Error fetching orders:', error);
     }
-    const data = await res.json();
-    setOrders(data.orders || []);
-    setLoading(false);
   }
 
   if (loading) return <div className="p-4">Loading...</div>;

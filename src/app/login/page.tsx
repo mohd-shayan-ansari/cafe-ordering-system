@@ -17,6 +17,7 @@ export default function LoginPage() {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ phone, password, isStaff: false }),
     });
 
@@ -36,7 +37,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border-2 border-orange-200">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-1">KBS Foods</h1>
-          <p className="text-gray-600 font-medium">Customer Login</p>
+          <p className="text-gray-800 font-semibold">Customer Login</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -46,7 +47,7 @@ export default function LoginPage() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
               placeholder="Enter your phone number"
             />
           </div>
@@ -57,7 +58,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
               placeholder="Enter your password"
             />
           </div>
@@ -70,14 +71,14 @@ export default function LoginPage() {
             {loading ? 'Logging in...' : '🚀 Login'}
           </button>
         </form>
-        <p className="text-sm text-center mt-4">
+        <p className="text-sm text-center mt-4 text-gray-800">
           Don&apos;t have an account?{' '}
-          <a href="/signup" className="text-blue-600 hover:underline">
+          <a href="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
             Sign up
           </a>
         </p>
         <p className="text-sm text-center mt-2">
-          <a href="/staff/login" className="text-gray-600 hover:underline">
+          <a href="/staff/login" className="text-orange-600 hover:text-orange-700 font-semibold">
             Staff Login
           </a>
         </p>
