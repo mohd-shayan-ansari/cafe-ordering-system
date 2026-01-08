@@ -55,7 +55,7 @@ export default function StaffDashboard() {
   }
 
   async function fetchOrders() {
-    const res = await fetch('/api/orders', { credentials: 'include' });
+    const res = await fetch('/api/staff/orders', { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
       const allOrders = data.orders || [];

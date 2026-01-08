@@ -17,23 +17,20 @@ export async function GET(req: NextRequest) {
     // Log for debugging
     console.log('[Orders API] Session:', { userId: session.userId, role: session.role, userIdType: typeof session.userId });
 
-    let orders: any[] = [];
-    if (session.role === 'staff') {
-      // Staff sees ALL orders from ALL customers, sorted by newest first
-      console.log('[Orders API] Staff user detected - fetching ALL orders');
-      orders = await Order.find()
-        .populate({
-          path: 'customerId',
-          select: 'name phone photoUrl',
-        })
-        .populate({
-          path: 'items.menuItemId',
-          select: 'name price',
-        })
+    // Optional scope: when scope=mine, always return only this user's orders
+    const scope = req.nextUrl.searchParams.get('scope');
+    if (scope === 'mine') {
+      const filter = { customerId: session.userId };
+      console.log(`[Orders API] scope=mine applied - filter:`, JSON.stringify(filter));
+      const orders = await Order.find(filter)
+        .populate({ path: 'items.menuItemId', select: 'name price' })
         .sort({ createdAt: -1 })
         .lean();
-      console.log(`[Orders API] Staff viewing all orders, count: ${orders.length}`);
-    } else if (session.role === 'customer') {
+      return NextResponse.json({ orders });
+    }
+
+    let orders: any[] = [];
+    if (session.role === 'customer') {
       // Customer sees only their own orders, sorted by newest first
       const filter = { customerId: session.userId };
       console.log(`[Orders API] Customer user detected - applying filter:`, JSON.stringify(filter));
@@ -46,8 +43,8 @@ export async function GET(req: NextRequest) {
         .lean();
       console.log(`[Orders API] Customer ${session.userId} has ${orders.length} order(s)`);
     } else {
-      console.warn(`[Orders API] Unknown role: ${session.role}`);
-      orders = [];
+      console.warn(`[Orders API] Non-customer role attempted to access customer orders: ${session.role}`);
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     // Ensure we return an array

@@ -33,56 +33,64 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-red-50 px-4">
-      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border-2 border-orange-200">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-1">KBS Foods</h1>
-          <p className="text-gray-800 font-semibold">Customer Login</p>
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-orange-50 to-red-50 px-4">
+      <div className="flex items-center justify-center py-8">
+        <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-2xl border-2 border-orange-200">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 mb-1">KBS Foods</h1>
+            <p className="text-gray-800 font-semibold">Customer Login</p>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-gray-700">📱 Phone Number</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
+                placeholder="Enter your phone number"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-gray-700">🔒 Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
+                placeholder="Enter your password"
+              />
+            </div>
+            {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl hover:from-orange-600 hover:to-red-600 disabled:from-gray-400 disabled:to-gray-400 font-semibold transition transform hover:scale-105 shadow-md"
+            >
+              {loading ? 'Logging in...' : '🚀 Login'}
+            </button>
+          </form>
+          <p className="text-sm text-center mt-4 text-gray-800">
+            Don&apos;t have an account?{' '}
+            <a href="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+              Sign up
+            </a>
+          </p>
+          <p className="text-sm text-center mt-2">
+            <a href="/staff/login" className="text-orange-600 hover:text-orange-700 font-semibold">
+              Staff Login
+            </a>
+          </p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-semibold mb-2 text-gray-700">📱 Phone Number</label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
-              placeholder="Enter your phone number"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-2 text-gray-700">🔒 Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-gray-900 font-medium placeholder:text-gray-700"
-              placeholder="Enter your password"
-            />
-          </div>
-          {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-xl hover:from-orange-600 hover:to-red-600 disabled:from-gray-400 disabled:to-gray-400 font-semibold transition transform hover:scale-105 shadow-md"
-          >
-            {loading ? 'Logging in...' : '🚀 Login'}
-          </button>
-        </form>
-        <p className="text-sm text-center mt-4 text-gray-800">
-          Don&apos;t have an account?{' '}
-          <a href="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
-            Sign up
-          </a>
-        </p>
-        <p className="text-sm text-center mt-2">
-          <a href="/staff/login" className="text-orange-600 hover:text-orange-700 font-semibold">
-            Staff Login
-          </a>
-        </p>
       </div>
+      <footer className="text-center text-sm text-gray-700 py-6 border-t border-gray-200">
+        <p className="font-semibold">Developer: <span className="text-orange-600 font-bold">Mohd Shayan</span></p>
+        <a href="https://shayan.co.in" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline font-medium transition">
+          Visit Portfolio → shayan.co.in
+        </a>
+      </footer>
     </div>
   );
 }

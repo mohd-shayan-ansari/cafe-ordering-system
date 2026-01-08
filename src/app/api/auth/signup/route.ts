@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
-import { hashPassword, setSessionCookie } from '@/lib/auth';
+import { hashPassword, signToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,9 +26,8 @@ export async function POST(req: NextRequest) {
       passwordHash,
     });
 
-    await setSessionCookie(user._id.toString(), user.role);
-
-    return NextResponse.json({
+    const token = signToken({ userId: user._id.toString(), role: user.role });
+    const res = NextResponse.json({
       user: {
         id: user._id,
         role: user.role,
@@ -37,6 +36,14 @@ export async function POST(req: NextRequest) {
         photoUrl: user.photoUrl,
       },
     });
+    res.cookies.set('session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7,
+      path: '/',
+    });
+    return res;
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }

@@ -13,17 +13,33 @@ export default function OrdersPage() {
   const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [checkedRole, setCheckedRole] = useState(false);
 
   useEffect(() => {
-    fetchOrders();
-    const interval = setInterval(fetchOrders, 10000); // Poll every 10s
-    return () => clearInterval(interval);
+    // Guard: only customers should access this page
+    (async () => {
+      try {
+        const res = await fetch('/api/auth/me', { credentials: 'include' });
+        const data = await res.json();
+        const role = data?.user?.role;
+        if (role !== 'customer') {
+          router.push('/login');
+          return;
+        }
+        setCheckedRole(true);
+        fetchOrders();
+        const interval = setInterval(fetchOrders, 10000); // Poll every 10s
+        return () => clearInterval(interval);
+      } catch (e) {
+        router.push('/login');
+      }
+    })();
   }, []);
 
   async function fetchOrders() {
     try {
-      console.log('[Orders Page] Fetching orders with credentials: include');
-      const res = await fetch('/api/orders', { credentials: 'include' });
+      console.log('[Orders Page] Fetching orders (scope=mine) with credentials: include');
+      const res = await fetch('/api/orders?scope=mine', { credentials: 'include' });
       console.log(`[Orders Page] Response status: ${res.status}`);
       
       if (!res.ok) {
@@ -42,7 +58,7 @@ export default function OrdersPage() {
     }
   }
 
-  if (loading) return <div className="p-4">Loading...</div>;
+  if (loading || !checkedRole) return <div className="p-4">Loading...</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">

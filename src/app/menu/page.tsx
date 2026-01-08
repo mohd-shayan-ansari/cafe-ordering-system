@@ -97,7 +97,7 @@ export default function MenuPage() {
   if (loading) return <div className="p-4">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex flex-col">
       {/* Toast Notification */}
       {showToast && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
@@ -143,94 +143,96 @@ export default function MenuPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto p-4 grid md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-4">
-          <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">🍽️ Available Items</h2>
-          {items.filter((i) => i.isAvailable).length === 0 && (
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
-              <p className="text-gray-700 font-medium">No items available at the moment</p>
-            </div>
-          )}
-          <div className="grid sm:grid-cols-2 gap-4">
-            {items
-              .filter((i) => i.isAvailable)
-              .map((item) => (
-                <div key={item._id} className="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:scale-105 border-2 border-orange-100">
-                  <div className="w-full h-40 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl mb-3 flex items-center justify-center overflow-hidden">
-                    {item.imageUrl ? (
-                      <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-5xl">🍽️</span>
-                    )}
+      <div className="flex-1">
+        <div className="max-w-7xl mx-auto p-4 grid md:grid-cols-3 gap-6">
+          <div className="md:col-span-2 space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">🍽️ Available Items</h2>
+            {items.filter((i) => i.isAvailable).length === 0 && (
+              <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+                <p className="text-gray-700 font-medium">No items available at the moment</p>
+              </div>
+            )}
+            <div className="grid sm:grid-cols-2 gap-4">
+              {items
+                .filter((i) => i.isAvailable)
+                .map((item) => (
+                  <div key={item._id} className="bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:scale-105 border-2 border-orange-100">
+                    <div className="w-full h-40 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl mb-3 flex items-center justify-center overflow-hidden">
+                      {item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-5xl">🍽️</span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-800">{item.name}</h3>
+                    {item.description && <p className="text-sm text-gray-700 font-medium mt-1">{item.description}</p>}
+                    <p className="text-xl font-bold mt-2 text-orange-600">₹{item.price}</p>
+                    <button
+                      onClick={() => addToCart(item)}
+                      className="mt-3 w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-xl hover:from-orange-600 hover:to-red-600 font-semibold transition shadow-md"
+                    >
+                      ➕ Add to Cart
+                    </button>
                   </div>
-                  <h3 className="font-bold text-lg text-gray-800">{item.name}</h3>
-                  {item.description && <p className="text-sm text-gray-700 font-medium mt-1">{item.description}</p>}
-                  <p className="text-xl font-bold mt-2 text-orange-600">₹{item.price}</p>
-                  <button
-                    onClick={() => addToCart(item)}
-                    className="mt-3 w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 rounded-xl hover:from-orange-600 hover:to-red-600 font-semibold transition shadow-md"
-                  >
-                    ➕ Add to Cart
-                  </button>
+                ))}
+            </div>
+          </div>
+
+          {/* Desktop Cart - hidden on mobile */}
+          <div className="hidden md:block bg-white p-6 rounded-2xl shadow-xl h-fit sticky top-20 border-2 border-orange-200">
+            <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">🛒 Your Cart</h2>
+            {cart.length === 0 && (
+              <div className="text-center py-8">
+                <p className="text-gray-700 font-medium">Cart is empty</p>
+                <p className="text-xs text-gray-600 font-medium mt-1">Add items to get started</p>
+              </div>
+            )}
+            <div className="space-y-3">
+              {cart.map((c) => (
+                <div key={c.menuItemId} className="flex justify-between items-center bg-orange-50 p-3 rounded-xl">
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm text-gray-800">{c.name}</p>
+                    <p className="text-xs text-gray-600">₹{c.price} each</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => updateQuantity(c.menuItemId, -1)}
+                      className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 font-bold transition shadow-sm"
+                    >
+                      -
+                    </button>
+                    <span className="w-8 text-center font-bold">{c.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(c.menuItemId, 1)}
+                      className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 font-bold transition shadow-sm"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               ))}
-          </div>
-        </div>
-
-        {/* Desktop Cart - hidden on mobile */}
-        <div className="hidden md:block bg-white p-6 rounded-2xl shadow-xl h-fit sticky top-20 border-2 border-orange-200">
-          <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">🛒 Your Cart</h2>
-          {cart.length === 0 && (
-            <div className="text-center py-8">
-              <p className="text-gray-700 font-medium">Cart is empty</p>
-              <p className="text-xs text-gray-600 font-medium mt-1">Add items to get started</p>
             </div>
-          )}
-          <div className="space-y-3">
-            {cart.map((c) => (
-              <div key={c.menuItemId} className="flex justify-between items-center bg-orange-50 p-3 rounded-xl">
-                <div className="flex-1">
-                  <p className="font-semibold text-sm text-gray-800">{c.name}</p>
-                  <p className="text-xs text-gray-600">₹{c.price} each</p>
+            {cart.length > 0 && (
+              <>
+                <div className="border-t-2 border-orange-200 mt-4 pt-4">
+                  <div className="flex justify-between font-bold text-lg text-gray-800">
+                    <span>Total:</span>
+                    <span className="text-orange-600">₹{totalAmount}</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => updateQuantity(c.menuItemId, -1)}
-                    className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 font-bold transition shadow-sm"
-                  >
-                    -
-                  </button>
-                  <span className="w-8 text-center font-bold">{c.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(c.menuItemId, 1)}
-                    className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 font-bold transition shadow-sm"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          {cart.length > 0 && (
-            <>
-              <div className="border-t-2 border-orange-200 mt-4 pt-4">
-                <div className="flex justify-between font-bold text-lg text-gray-800">
-                  <span>Total:</span>
-                  <span className="text-orange-600">₹{totalAmount}</span>
-                </div>
-              </div>
-              <button
-                onClick={placeOrder}
-                className="mt-4 w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-xl hover:from-green-600 hover:to-emerald-600 font-bold transition shadow-lg text-lg"
-              >
-                🚀 Place Order
-              </button>
-            </>
-          )}
-          <div className="mt-4 pt-4 border-t-2 border-orange-200">
-            <a href="/orders" className="text-orange-600 text-sm hover:underline font-semibold flex items-center gap-1">
-              📋 View My Orders →
-            </a>
+                <button
+                  onClick={placeOrder}
+                  className="mt-4 w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-3 rounded-xl hover:from-green-600 hover:to-emerald-600 font-bold transition shadow-lg text-lg"
+                >
+                  🚀 Place Order
+                </button>
+              </>
+            )}
+            <div className="mt-4 pt-4 border-t-2 border-orange-200">
+              <a href="/orders" className="text-orange-600 text-sm hover:underline font-semibold flex items-center gap-1">
+                📋 View My Orders →
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -305,6 +307,13 @@ export default function MenuPage() {
           </div>
         </div>
       )}
+
+      <footer className="text-center text-sm text-gray-700 py-6 border-t border-gray-200">
+        <p className="font-semibold">Developer: <span className="text-orange-600 font-bold">Mohd Shayan</span></p>
+        <a href="https://shayan.co.in" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline font-medium transition">
+          Visit Portfolio → shayan.co.in
+        </a>
+      </footer>
     </div>
   );
 }
