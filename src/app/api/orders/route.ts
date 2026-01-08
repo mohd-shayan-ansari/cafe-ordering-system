@@ -13,6 +13,9 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    // Log for debugging (remove after testing)
+    console.log('Orders API - Session:', { userId: session.userId, role: session.role });
+
     let orders;
     if (session.role === 'staff') {
       // Staff sees ALL orders from ALL customers, sorted by newest first
@@ -27,9 +30,12 @@ export async function GET(req: NextRequest) {
         })
         .sort({ createdAt: -1 })
         .lean();
+      console.log('Staff viewing all orders, count:', orders.length);
     } else {
       // Customer sees only their own orders, sorted by newest first
-      orders = await Order.find({ customerId: session.userId })
+      const filter = { customerId: session.userId };
+      console.log('Customer filter:', filter);
+      orders = await Order.find(filter)
         .populate({
           path: 'items.menuItemId',
           select: 'name price',
