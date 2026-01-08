@@ -76,17 +76,30 @@ export default function StaffDashboard() {
   }
 
   async function updateOrderStatus(orderId: string, status: string) {
-    const res = await fetch(`/api/orders/${orderId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ status }),
-    });
-    if (res.ok) {
-      fetchOrders();
-      setSelectedOrder(null);
-    } else {
-      alert('Failed to update order');
+    try {
+      console.log(`[Dashboard] Updating order ${orderId} to status: ${status}`);
+      const res = await fetch(`/api/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ status }),
+      });
+      
+      const responseText = await res.text();
+      console.log(`[Dashboard] Response status: ${res.status}, body:`, responseText);
+      
+      if (res.ok) {
+        console.log(`[Dashboard] Order ${orderId} successfully updated to ${status}`);
+        await fetchOrders();
+        setSelectedOrder(null);
+      } else {
+        const errorData = responseText ? JSON.parse(responseText) : {};
+        console.error(`[Dashboard] Failed to update order:`, errorData);
+        alert(`Failed to update order: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error(`[Dashboard] Error updating order:`, error);
+      alert(`Error updating order: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -157,16 +170,29 @@ export default function StaffDashboard() {
   }
 
   function handleScan(result: any) {
-    const orderId = result?.[0]?.rawValue;
-    if (orderId) {
-      const order = orders.find((o) => o._id === orderId);
-      if (order) {
-        // Directly mark order as HandedOver when scanned
-        updateOrderStatus(orderId, 'HandedOver');
-        setShowScanner(false);
+    try {
+      console.log(`[Dashboard] QR scan result:`, result);
+      const orderId = result?.[0]?.rawValue;
+      console.log(`[Dashboard] Extracted orderId from QR: ${orderId}`);
+      
+      if (orderId) {
+        const order = orders.find((o) => o._id === orderId);
+        if (order) {
+          console.log(`[Dashboard] Found order, marking as HandedOver`);
+          // Directly mark order as HandedOver when scanned
+          updateOrderStatus(orderId, 'HandedOver');
+          setShowScanner(false);
+        } else {
+          console.warn(`[Dashboard] Order ${orderId} not found in current orders list`);
+          alert(`Order ${orderId} not found. Orders available: ${orders.map(o => o._id).join(', ')}`);
+        }
       } else {
-        alert('Order not found');
+        console.warn(`[Dashboard] No orderId extracted from QR result`);
+        alert('Could not read order ID from QR code');
       }
+    } catch (error) {
+      console.error(`[Dashboard] Error in handleScan:`, error);
+      alert(`Error scanning QR: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
